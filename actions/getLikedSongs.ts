@@ -2,7 +2,10 @@ import { Song } from "@/types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-export const getLikedSongs = async (): Promise<Song[]> => {
+export const getLikedSongs = async (): Promise<{
+  songs: Song[];
+  createdAt: number[] | undefined;
+}> => {
   const supabase = createServerComponentClient({
     cookies: cookies,
   });
@@ -16,12 +19,13 @@ export const getLikedSongs = async (): Promise<Song[]> => {
     .eq("user_id", session?.user?.id)
     .order("created_at", { ascending: false });
   if (error || !data) {
-    return [];
+    return { songs: [], createdAt: [] };
   }
 
-  return (
-    data.map((item) => ({
-      ...item.songs,
-    })) || []
-  );
+  const songs = data.map((item) => ({
+    ...item.songs,
+  }));
+  const createdTime = data.map((item) => item.created_at);
+
+  return { songs, createdAt: createdTime };
 };

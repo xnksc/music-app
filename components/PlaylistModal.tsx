@@ -98,7 +98,11 @@ export const PlaylistModal = () => {
             {...register("image", { required: true })}
           ></Input>
         </div>
-        <Button className="mt-6 bg-cyan-500" disabled={isLoading} type="submit">
+        <Button
+          className="mt-6 bg-cyan-600 hover:bg-cyan-500/85 active:bg-cyan-500"
+          disabled={isLoading}
+          type="submit"
+        >
           Create Playlist
         </Button>
       </form>

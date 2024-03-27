@@ -59,17 +59,17 @@ export const Sidebar = ({ children, songs, playlists }: SidebarProps) => {
       )}
     >
       <div className="hidden md:flex flex-col gap-y-2 bg-black h-full md:w-[230px] lg:w-[250px] pr-2">
-        <Box>
+        <Box className="rounded-br-md">
           <div className="flex flex-col gap-y-4 px-5 py-4 ">
             {routes.map((item) => {
               return <SidebarItem key={item.label} {...item}></SidebarItem>;
             })}
           </div>
         </Box>
-        <Box className="overflow-y-auto scrollbar-none h-full rounded-t-lg rounded-b-lg ">
+        <Box className="overflow-y-auto scrollbar-none h-full rounded-r-md">
           <Library songs={songs} playlists={playlists}></Library>
         </Box>
-        <Box className="overflow-y-auto scrollbar-none h-full rounded-t-lg rounded-b-none">
+        <Box className="overflow-y-auto scrollbar-none h-full rounded-tr-md">
           <PlaylistsLibrary playlists={playlists}></PlaylistsLibrary>
         </Box>
       </div>

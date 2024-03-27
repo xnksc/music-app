@@ -175,7 +175,7 @@ export const PlayerContent = ({
     <BsShuffle
       size={isMobile ? 14 : 16}
       className={
-        (shuffleMode ? "text-cyan-600" : "text-neutral-200 hover:text-white") +
+        (shuffleMode ? "text-cyan-500" : "text-neutral-200 hover:text-white") +
         " cursor-pointer  transition "
       }
       onClick={() => setShuffleMode(!shuffleMode)}
@@ -187,7 +187,7 @@ export const PlayerContent = ({
       <BsRepeat1
         onClick={toggleRepeatMode}
         size={isMobile ? 14 : 16}
-        className="text-cyan-500 cursor-pointer transition"
+        className="text-cyan-500 relative cursor-pointer transition"
       />
     ) : (
       <BsRepeat
@@ -233,7 +233,7 @@ export const PlayerContent = ({
             className="cursor-default hover:from-transparent hover:to-transparent"
             data={song}
           ></MediaItem>
-          <LikeBtn songId={song.id}></LikeBtn>
+          <LikeBtn songId={song.id} size={20}></LikeBtn>
         </div>
       </div>
 

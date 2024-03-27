@@ -39,7 +39,7 @@ export const ScrollableTitle = ({ title }: ScrollableTitleProps) => {
     >
       {shouldScroll ? (
         <motion.h1
-          className="whitespace-nowrap"
+          className="whitespace-nowrap "
           animate={{ x: -moveTitleWidth }}
           initial={{ x: 0 }}
           transition={{ duration: duration, repeat: Infinity, ease: "linear" }}

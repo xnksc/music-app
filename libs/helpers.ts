@@ -20,6 +20,17 @@ export const getUrl = () => {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const getDateDiff = (dateStrings: string[], dateNow: number) => {
+  const dateDiff = [];
+  for (const dateStr of dateStrings) {
+    const date = new Date(dateStr).getTime();
+    dateDiff.push((dateNow - date) / 1000); // sec
+  }
+
+  return dateDiff;
+};
+
 export const postData = async ({ url, data }: postDataProps) => {
   const res: Response = await fetch(url, {
     method: "POST",

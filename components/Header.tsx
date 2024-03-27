@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
@@ -11,6 +11,8 @@ import { FaUserAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { usePlayer } from "@/hooks/usePlayer";
 import { MdLibraryMusic } from "react-icons/md";
+import { cn } from "@/libs/helpers";
+import { useEffect, useState } from "react";
 interface HeaderProps {
   children: React.ReactNode;
   className?: string;
@@ -21,11 +23,16 @@ export const Header = ({ children, className }: HeaderProps) => {
   const { onOpen } = useAuthModal();
   const supabaseClient = useSupabaseClient();
   const { user } = useUser();
+  const pathname = usePathname();
+  const [path, setPath] = useState("");
   const player = usePlayer();
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
     player.reset();
     router.refresh();
+    if (pathname.startsWith("/playlists") || pathname === "liked") {
+      router.push("/");
+    }
     if (error) {
       toast.error(error.message);
     } else {
@@ -33,58 +40,83 @@ export const Header = ({ children, className }: HeaderProps) => {
     }
   };
 
+  const btnCn =
+    pathname == "/liked"
+      ? "bg-[#50369c] hover:bg-[#637de3]"
+      : pathname.startsWith("/search")
+      ? "bg-[#7E6363] hover:bg-[#c5b79d]"
+      : pathname.startsWith("/playlists")
+      ? "bg-[#186a70] hover:bg-[#3ca2ab]"
+      : "";
+
   return (
-    <div
-      // className={twMerge("h-fit bg-gradient-to-b from-cyan-800 p-5", className)}
-      className={twMerge("h-fit p-5 ", className)}
-    >
+    <div className={twMerge("h-fit p-5 ", className)}>
       <div className="w-full mb-4 flex items-center justify-between">
         <div className="hidden md:flex gap-x-2 items-center"></div>
         <div className="flex md:hidden gap-x-2 items-center">
           <button
             onClick={() => router.push("/")}
-            className=" rounded-full p-2 bg-white items-center justify-center hover:opacity-80 transition"
+            className={cn(
+              " rounded-full p-2 items-center justify-center hover:opacity-80 transition text-neutral-100 hover:text-neutral-700 bg-cyan-600 hover:bg-cyan-500 ",
+              btnCn
+            )}
           >
-            <HiHome className="text-black" size={20}></HiHome>
+            <HiHome size={20}></HiHome>
           </button>
           <button
             onClick={() => router.push("/search")}
-            className=" rounded-full p-2 bg-white items-center justify-center hover:opacity-80 transition"
+            className={cn(
+              " rounded-full p-2 bg-cyan-600 hover:bg-cyan-500 items-center justify-center hover:opacity-80 transition text-neutral-100 hover:text-neutral-700",
+              btnCn
+            )}
           >
-            <BiSearch className="text-black" size={20}></BiSearch>
+            <BiSearch size={20}></BiSearch>
           </button>
           <button
             onClick={() => router.push("/playlists")}
-            className=" rounded-full p-2 bg-white items-center justify-center hover:opacity-80 transition"
+            className={cn(
+              " rounded-full p-2  items-center justify-center hover:opacity-80 transition text-neutral-100 hover:text-neutral-700 bg-cyan-600 hover:bg-cyan-500 ",
+              btnCn
+            )}
           >
-            <MdLibraryMusic className="text-black" size={20}></MdLibraryMusic>
+            <MdLibraryMusic size={20}></MdLibraryMusic>
           </button>
         </div>
         <div className="flex justify-between items-center gap-x-4">
           {user ? (
             <div className="flex gap-4 items-center">
-              <Button onClick={handleLogout} className="bg-white px-6 py-2">
+              <Button
+                onClick={handleLogout}
+                className={cn(
+                  "bg-cyan-600 hover:text-neutral-700 hover:bg-cyan-500 text-neutral-100 px-5 py-2",
+                  btnCn
+                )}
+              >
                 Logout
               </Button>
               <Button
                 onClick={() => router.push("/account")}
-                className="bg-white"
+                className={cn(
+                  "bg-cyan-600 hover:text-neutral-700 hover:bg-cyan-500 text-neutral-100 px-3 py-3",
+                  btnCn
+                )}
               >
                 <FaUserAlt></FaUserAlt>
               </Button>
             </div>
           ) : (
             <>
-              <div className="">
-                <Button
-                  onClick={() => {
-                    onOpen();
-                  }}
-                  className="bg-emerald-400 px-6 py-2"
-                >
-                  Log in
-                </Button>
-              </div>
+              <Button
+                onClick={() => {
+                  onOpen();
+                }}
+                className={cn(
+                  "bg-cyan-600 hover:text-neutral-700 hover:bg-cyan-500 text-neutral-100 px-5 py-2",
+                  btnCn
+                )}
+              >
+                Log in
+              </Button>
             </>
           )}
         </div>

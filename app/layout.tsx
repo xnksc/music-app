@@ -11,8 +11,11 @@ import { getSongsById } from "@/actions/getSongsById";
 import { Player } from "@/components/Player";
 import { getActiveProducts } from "@/actions/getActiveProducts";
 import { getPlaylists } from "@/actions/getPlaylists";
+import { cn } from "@/libs/helpers";
+// import TimeAgo from "javascript-time-ago";
+// import en from "javascript-time-ago/locale/en";
 export const revalidate = 0;
-
+// TimeAgo.addDefaultLocale(en);
 const font = Figtree({ subsets: ["latin"] }); // FONT
 
 export const metadata: Metadata = {
@@ -29,7 +32,8 @@ export default async function RootLayout({
   const products = await getActiveProducts();
   return (
     <html lang="en">
-      <body className={font.className}>
+      {/* <body className={cn("select-none", font.className)}> */}
+      <body className={cn("", font.className)}>
         <ToasterProvider></ToasterProvider>
         <SupabaseProvider>
           <UserProvider>

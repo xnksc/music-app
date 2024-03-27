@@ -1,5 +1,5 @@
 import { useAuthModal } from "@/hooks/useAuthModal";
-import { usePlayer } from "@/hooks/usePlayer";
+import { cn } from "@/libs/helpers";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -12,10 +12,10 @@ interface DeleteSongFromPlaylistProps {
 export const DeleteSongFromPlaylist = ({
   songId,
   playlistId,
+  className,
 }: DeleteSongFromPlaylistProps) => {
   const { onClose, isOpen } = useAuthModal();
   const router = useRouter();
-  const player = usePlayer();
   const supabaseClient = useSupabaseClient();
   const onDeleteSongFromPlaylist = async () => {
     try {
@@ -30,9 +30,6 @@ export const DeleteSongFromPlaylist = ({
       if (error) {
         toast.error("error");
       }
-      if (player.activeId == songId) {
-        player.reset();
-      }
     } catch (error) {
       toast.error("error");
     }
@@ -40,9 +37,12 @@ export const DeleteSongFromPlaylist = ({
   };
 
   return (
-    <div className="opacity-75 hover:opacity-100 items-center">
+    <div className="items-center">
       <IoRemoveCircleOutline
-        className=" cursor-pointer items-center hover:opacity-100 justify-self-center"
+        className={cn(
+          "cursor-pointer items-center text-neutral-400 hover:text-neutral-100 justify-self-center",
+          className
+        )}
         size={20}
         onClick={onDeleteSongFromPlaylist}
       ></IoRemoveCircleOutline>

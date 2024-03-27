@@ -18,12 +18,12 @@ export default async function Home() {
           <div className="grid grid-cols-1 gap-y-3 sm:grid-cols-2 gap-x-3 md:gap-x-5 xl:grid-cols-3 2xl:grid-cols-4 mt-4">
             <ListItem
               href="liked"
-              image="/images/like.png"
+              image="/images/cyan-gradient.png"
               name="Favorites Songs"
             ></ListItem>
             <ListItem
               href="playlists"
-              image="/images/like.png"
+              image="/images/green-gradient.png"
               name="Playlists"
             ></ListItem>
           </div>

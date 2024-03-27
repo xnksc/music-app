@@ -3,40 +3,47 @@ import { MediaItem } from "./MediaItem";
 import { DeletePlaylistButton } from "./DeletePlaylistButton";
 import { Playlist } from "@/types";
 import { useRouter } from "next/navigation";
+import { LibraryMediaItem } from "./LibraryMediaItem";
 interface PlaylistItemProps {
   playlist: Playlist;
 }
 export const PlaylistItem = ({ playlist }: PlaylistItemProps) => {
   const router = useRouter();
-  const playlistComponent = useMemo(() => {
-    const handleClick = (id: string) => {
-      router.push(`/playlists/${id}`);
-    };
-    return (
-      <MediaItem
-        className="group-hover:bg-gradient-to-r  group-hover:transition group-hover:from-neutral-900/80 group-hover:to-neutral-800"
-        isPlayer={false}
-        key={playlist.id}
-        onClick={() => handleClick(playlist.id)}
-        data={playlist}
-      ></MediaItem>
-    );
-  }, [playlist, router]);
-  const deletePlaylistComponent = useMemo(() => {
-    return (
-      <DeletePlaylistButton
-        playlistId={playlist.id}
-        imgPath={playlist.image_path}
-      ></DeletePlaylistButton>
-    );
-  }, [playlist.id, playlist.image_path]);
+  const handleClick = (id: string) => {
+    router.push(`/playlists/${id}`);
+  };
+  // const playlistComponent = useMemo(() => {
+
+  //   return (
+  //     <LibraryMediaItem
+  //       className="group-hover:bg-gradient-to-r  group-hover:transition group-hover:from-neutral-900/80 group-hover:to-neutral-800"
+  //       key={playlist.id}
+  //       onClick={() => handleClick(playlist.id)}
+  //       data={playlist}
+  //     ></LibraryMediaItem>
+  //   );
+  // }, [playlist, router]);
+  // const deletePlaylistComponent = useMemo(() => {
+  //   return (
+
+  //   );
+  // }, [playlist.id, playlist.image_path]);
   return (
-    <div className="flex w-full  snap-start">
-      <div className="w-full group-hover:w-[calc(100%-36px)]">
-        {playlistComponent}
+    <div className="flex items-center justify-between group" key={playlist.id}>
+      <div className="w-full  group-hover:w-[calc(100%-25px)]">
+        <LibraryMediaItem
+          className="group-hover:bg-gradient-to-r  group-hover:transition group-hover:from-neutral-900/80 group-hover:to-neutral-800"
+          key={playlist.id}
+          onClick={() => handleClick(playlist.id)}
+          data={playlist}
+        ></LibraryMediaItem>
       </div>
-      <div className="hidden transition group-hover:flex opacity-60 hover:opacity-100 w-[36px] items-center justify-center">
-        {deletePlaylistComponent}
+      <div className="hidden transition group-hover:flex  w-[25px] items-center justify-center">
+        <DeletePlaylistButton
+          playlistId={playlist.id}
+          imgPath={playlist.image_path}
+          size={16}
+        ></DeletePlaylistButton>
       </div>
     </div>
   );

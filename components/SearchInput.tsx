@@ -8,7 +8,7 @@ import { Input } from "./Input";
 export const SearchInput = () => {
   const router = useRouter();
   const [value, setValue] = useState<string>("");
-  const debouncedValue = useDebounce<string>(value, 100);
+  const debouncedValue = useDebounce<string>(value, 200);
   useEffect(() => {
     const query = {
       title: debouncedValue,
@@ -22,6 +22,7 @@ export const SearchInput = () => {
   return (
     <Input
       placeholder="Find songs"
+      className="text-[#fffbf3]"
       value={value}
       onChange={(e) => setValue(e.target.value)}
     ></Input>

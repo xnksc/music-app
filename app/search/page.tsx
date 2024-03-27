@@ -17,11 +17,11 @@ const Search = async ({ searchParams }: SearchProps) => {
   const playlists = await getPlaylists();
   return (
     <div
-      className="bg-neutral-800 h-full w-full  overflow-hidden overflow-y-auto scrollbar-thin scrollbar-track-cyan-800/20 scrollbar-thumb-cyan-700/50 scrollbar-thumb-rounded-full scrollbar-track-rounded-full 
-    scrollbar-corner-rounded-full snap-y"
+      className="bg-neutral-800 h-full w-full  overflow-hidden overflow-y-auto scrollbar-thin scrollbar-track-cyan-800/20 scrollbar-thumb-[#7e63638d] scrollbar-thumb-rounded-full scrollbar-track-rounded-full 
+    scrollbar-corner-rounded-full"
     >
-      <Header className=" from-gray-800 gap-y-2 flex flex-col">
-        <h1 className="text-white text-3xl font-semibold">Search</h1>
+      <Header className=" from-neutral-900 gap-y-2 flex flex-col">
+        <h1 className="text-[#fff5dd] text-3xl font-semibold">Search</h1>
         <SearchInput></SearchInput>
       </Header>
       <SearchContent songs={songs} playlists={playlists}></SearchContent>

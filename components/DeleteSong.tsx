@@ -9,8 +9,14 @@ interface DeleteSongProps {
   imgPath: string;
   className?: string;
   songId: string;
+  size?: number;
 }
-export const DeleteSong = ({ songId, songPath, imgPath }: DeleteSongProps) => {
+export const DeleteSong = ({
+  songId,
+  songPath,
+  imgPath,
+  size = 20,
+}: DeleteSongProps) => {
   const { onClose, isOpen } = useAuthModal();
   const router = useRouter();
   const player = usePlayer();
@@ -40,10 +46,10 @@ export const DeleteSong = ({ songId, songPath, imgPath }: DeleteSongProps) => {
   };
 
   return (
-    <div className="hover:opacity-100 items-center">
+    <div className="items-center">
       <IoRemoveCircleOutline
-        className=" cursor-pointer items-center hover:opacity-100 justify-self-center"
-        size={20}
+        className=" cursor-pointer items-center justify-self-center text-neutral-400 hover:text-neutral-100"
+        size={size}
         onClick={onDeleteSong}
       ></IoRemoveCircleOutline>
     </div>

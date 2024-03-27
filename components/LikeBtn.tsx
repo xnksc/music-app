@@ -2,17 +2,21 @@
 
 import { useAuthModal } from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
+import { cn } from "@/libs/helpers";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+
+import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 
 interface LikeBtnProps {
   songId: string;
+  size?: number;
+  classname?: string;
 }
 
-export const LikeBtn = ({ songId }: LikeBtnProps) => {
+export const LikeBtn = ({ songId, size = 20, classname }: LikeBtnProps) => {
   const router = useRouter();
   const { supabaseClient } = useSessionContext();
   const authModal = useAuthModal();
@@ -38,7 +42,7 @@ export const LikeBtn = ({ songId }: LikeBtnProps) => {
     fetchData();
   }, [songId, supabaseClient, user?.id]);
 
-  const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
+  const Icon = isLiked ? VscHeartFilled : VscHeart;
 
   const handleLike = async () => {
     if (!user) {
@@ -70,9 +74,14 @@ export const LikeBtn = ({ songId }: LikeBtnProps) => {
   return (
     <button
       onClick={handleLike}
-      className=" hover:opacity-75 transition duration-100"
+      className={cn(
+        isLiked
+          ? "text-cyan-600 hover:text-cyan-500"
+          : "text-neutral-400 hover:text-neutral-100",
+        classname
+      )}
     >
-      <Icon color={isLiked ? "#06b6d4" : "white"} size={25}></Icon>
+      <Icon size={size}></Icon>
     </button>
   );
 };

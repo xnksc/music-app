@@ -5,7 +5,7 @@ import { LikedSongsContent } from "./components/LikedSongsContent";
 
 export const revalidate = 0;
 const Liked = async () => {
-  const songs = await getLikedSongs();
+  const { songs, createdAt } = await getLikedSongs();
   return (
     <div
       className="bg-neutral-800 w-full h-full overflow-y-auto overflow-hidden scrollbar-thin scrollbar-track-sky-800/20 scrollbar-thumb-sky-700/50 scrollbar-thumb-rounded-full scrollbar-track-rounded-full 
@@ -26,7 +26,10 @@ const Liked = async () => {
           </div>
         </div>
       </Header>
-      <LikedSongsContent songs={songs}></LikedSongsContent>
+      <LikedSongsContent
+        songs={songs}
+        createdAt={createdAt!}
+      ></LikedSongsContent>
     </div>
   );
 };

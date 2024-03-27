@@ -45,7 +45,7 @@ export const AccountContent = () => {
           <p>You already subscribed!</p>
           <Button
             onClick={redirect}
-            className="w-[300px]"
+            className="w-[300px] bg-cyan-600 hover:bg-cyan-700"
             disabled={loading || isLoading}
           >
             Manage Subscribtion

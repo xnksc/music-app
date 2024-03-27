@@ -7,17 +7,26 @@ export interface Song {
   title: string;
   song_path: string;
   image_path: string;
+  created_at: number;
+}
+export interface LikedSong {
+  id: string;
+  user_id: string;
+  song_id: string;
+  created_at: number;
 }
 export interface Playlist {
   id: string;
   user_id: string;
   title: string;
   image_path: string;
+  created_at: number;
 }
 export interface PlaylistSong {
   id: string;
   playlist_id: string;
   song_id: string;
+  created_at: number;
 }
 
 export interface Product {

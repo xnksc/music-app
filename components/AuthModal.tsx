@@ -45,7 +45,7 @@ export const AuthModal = () => {
               colors: {
                 // COLOR ON MODAL BTN
                 brand: "#404040",
-                brandAccent: "#10b981",
+                brandAccent: "#0891b2",
               },
             },
           },

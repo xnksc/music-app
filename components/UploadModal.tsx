@@ -103,6 +103,7 @@ export const UploadModal = () => {
           disabled={isLoading}
           {...register("title", { required: true })}
           placeholder="Song title"
+          className="border-teal-500"
         ></Input>
         <Input
           id="author"
@@ -131,7 +132,7 @@ export const UploadModal = () => {
           ></Input>
         </div>
         <Button
-          className="mt-6 bg-emerald-500"
+          className="mt-6 bg-cyan-600 hover:bg-cyan-500/85 active:bg-cyan-500"
           disabled={isLoading}
           type="submit"
         >

@@ -1,5 +1,4 @@
 import { useAuthModal } from "@/hooks/useAuthModal";
-import { useGetPlaylistById } from "@/hooks/useGetPlaylistById";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -8,15 +7,16 @@ interface DeletePlaylistProps {
   imgPath: string;
   className?: string;
   playlistId: string;
+  size?: number;
 }
 export const DeletePlaylistButton = ({
   playlistId,
+  size = 20,
   imgPath,
 }: DeletePlaylistProps) => {
   const { onClose, isOpen } = useAuthModal();
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
-  const { playlist } = useGetPlaylistById(playlistId);
   const pathname = usePathname();
   const onDeletePlaylist = async () => {
     try {
@@ -43,8 +43,8 @@ export const DeletePlaylistButton = ({
   return (
     <div className="items-center ">
       <IoRemoveCircleOutline
-        className=" cursor-pointer items-center hover:opacity-100 justify-self-center"
-        size={20}
+        className=" cursor-pointer items-center text-neutral-400 hover:text-neutral-100 justify-self-center"
+        size={size}
         onClick={onDeletePlaylist}
       ></IoRemoveCircleOutline>
     </div>
