@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { FaHeart } from "react-icons/fa";
 import { MdLibraryMusic } from "react-icons/md";
 interface ListItemProps {
@@ -15,7 +15,7 @@ export const ListItem = ({ href, image, name }: ListItemProps) => {
     router.push(href);
   };
   const icon =
-    name === "Favorites Songs" ? (
+    href === "/liked" ? (
       <FaHeart size={30} className="text-[#DFF5FF]"></FaHeart>
     ) : (
       <MdLibraryMusic size={30} className="text-[#DFF5FF]"></MdLibraryMusic>

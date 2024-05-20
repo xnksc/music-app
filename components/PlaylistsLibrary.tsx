@@ -10,9 +10,13 @@ import { PlaylistItem } from "./PlaylistItem";
 
 interface PlaylistsLibraryProps {
   playlists: Playlist[];
+  title: string;
 }
 
-export const PlaylistsLibrary = ({ playlists }: PlaylistsLibraryProps) => {
+export const PlaylistsLibrary = ({
+  playlists,
+  title,
+}: PlaylistsLibraryProps) => {
   const authModal = useAuthModal();
   const playlistModal = usePlaylistModal();
   const { user } = useUser();
@@ -28,7 +32,7 @@ export const PlaylistsLibrary = ({ playlists }: PlaylistsLibraryProps) => {
       <div className="bg-gradient-to-b from-neutral-900 to-neutral-800 flex items-center justify-center sticky top-0  z-10 px-3 pt-2 pb-2">
         <div className="inline-flex items-center gap-x-2">
           <TbPlaylist className="text-neutral-400" size={16}></TbPlaylist>
-          <p className="text-neutral-400 font-medium text-sm">Playlists</p>
+          <p className="text-neutral-400 font-medium text-sm">{title}</p>
         </div>
         <FaPlus
           className="text-neutral-400 

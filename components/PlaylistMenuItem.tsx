@@ -1,6 +1,7 @@
 // import { getSongsByPlaylistId } from "@/actions/getSongsByPlaylistId";
 import { useGetSongIdsByPlaylistId } from "@/hooks/useGetSongIdsByPlaylistId";
 import { cn } from "@/libs/helpers";
+import { usePathname } from "@/navigation";
 import { Playlist } from "@/types";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
@@ -21,8 +22,15 @@ export const PlaylistMenuItem = ({
   const supabaseClient = useSupabaseClient();
   const [isAdded, setIsAdded] = useState(false);
   const { songIds } = useGetSongIdsByPlaylistId(playlist.id);
-  // const {} = getSongsByPlaylistId(playlist.id)
-
+  const pathname = usePathname();
+  const color =
+    pathname == "/liked"
+      ? "bg-sky-800/95 hover:bg-sky-500/95"
+      : pathname.startsWith("/search")
+      ? "bg-stone-600/95 hover:bg-stone-400/95"
+      : pathname.startsWith("/playlists")
+      ? "bg-teal-800/95 hover:bg-teal-500/95"
+      : "bg-cyan-800/95 hover:bg-cyan-500/95";
   const removeSongFromPlaylist = async () => {
     const { error } = await supabaseClient
       .from("playlists_songs")
@@ -32,7 +40,7 @@ export const PlaylistMenuItem = ({
     if (error) {
       toast.error("error");
     }
-    toast("Song removed from playlist " + playlist.title);
+    toast.success("Song removed from playlist " + playlist.title);
   };
 
   useEffect(() => {
@@ -62,8 +70,8 @@ export const PlaylistMenuItem = ({
   return (
     <div
       className={cn(
-        "hover:bg-cyan-600 h-[32px] flex items-center px-2 py-1 text-neutral-200 hover:text-neutral-800 font-medium",
-        isAdded ? "bg-cyan-700/95" : ""
+        " h-[32px] flex items-center px-2 py-1 text-neutral-200 hover:text-neutral-800 font-medium",
+        color
       )}
       onClick={handleClick}
     >

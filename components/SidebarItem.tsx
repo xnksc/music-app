@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { IconType } from "react-icons";
 import { twMerge } from "tailwind-merge";
 
@@ -24,7 +24,7 @@ export const SidebarItem = ({
       )}
     >
       <Icon size={26}></Icon>
-      <p className="truncate w-full">{label}</p>
+      <p className="truncate w-full ">{label}</p>
     </Link>
   );
 };

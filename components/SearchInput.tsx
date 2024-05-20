@@ -1,11 +1,15 @@
 "use client";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useRouter } from "next/navigation";
 import queryString from "query-string";
 import { useEffect, useState } from "react";
 import { Input } from "./Input";
+import { useRouter } from "@/navigation";
 
-export const SearchInput = () => {
+interface SearchInputProps {
+  placeholder?: string;
+}
+
+export const SearchInput = ({ placeholder = "" }: SearchInputProps) => {
   const router = useRouter();
   const [value, setValue] = useState<string>("");
   const debouncedValue = useDebounce<string>(value, 200);
@@ -21,8 +25,8 @@ export const SearchInput = () => {
   }, [debouncedValue, router]);
   return (
     <Input
-      placeholder="Find songs"
-      className="text-[#fffbf3]"
+      placeholder={placeholder}
+      className="text-[#fffbf3] border-[#7E6363] focus:border-[#c5b79d]"
       value={value}
       onChange={(e) => setValue(e.target.value)}
     ></Input>

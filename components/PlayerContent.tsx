@@ -15,6 +15,7 @@ import { PlaylistsMenu } from "./PlaylistsMenu";
 import { Howl } from "howler";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/libs/helpers";
+import { usePathname } from "@/navigation";
 
 interface PlayerContentProps {
   song: Song;
@@ -38,6 +39,15 @@ export const PlayerContent = ({
   const [isPlaying, setIsPlaying] = useState(true);
   const [timerId, setTimerId] = useState<NodeJS.Timeout>();
   const Icon = isPlaying === true ? IoMdPause : BsPlayFill;
+  const pathname = usePathname();
+  const color =
+    pathname == "/liked"
+      ? "text-sky-500 hover:text-sky-400"
+      : pathname.startsWith("/search")
+      ? "text-[#d2c6b1] hover:text-stone-200/90"
+      : pathname.startsWith("/playlists")
+      ? "text-teal-500 hover:text-teal-400"
+      : "text-cyan-500 hover:text-cyan-400";
   const VolumeIcon =
     volume === 0
       ? RxSpeakerOff
@@ -61,12 +71,11 @@ export const PlayerContent = ({
   };
 
   const onPlayNext = () => {
+    setProgress(0);
     if (player.ids.length === 0) {
       return;
     }
-
     if (repeatModeRef.current === "repeat") {
-      setProgress(0);
       soundRef.current?.stop();
       soundRef.current?.seek(0);
       soundRef.current?.play();
@@ -92,11 +101,11 @@ export const PlayerContent = ({
   };
 
   const onPlayPrevious = () => {
+    setProgress(0);
     if (player.ids.length === 0) {
       return;
     }
     if (repeatModeRef.current === "repeat") {
-      setProgress(0);
       soundRef.current?.stop();
       soundRef.current?.seek(0);
       soundRef.current?.play();
@@ -114,6 +123,7 @@ export const PlayerContent = ({
     setVolume(value);
     soundRef.current?.volume(value);
   };
+  
   const handleProgressChange = (newValue: number) => {
     setProgress(newValue);
     soundRef.current?.seek(newValue);
@@ -122,9 +132,11 @@ export const PlayerContent = ({
   useEffect(() => {
     soundRef.current = new Howl({
       src: [songUrl],
-      autoplay: true,
+
       volume: volume,
       onplay: () => setIsPlaying(true),
+      // html5: true,
+      autoplay: true,
       onend: () => {
         repeatModeRef.current !== "repeat" && setIsPlaying(false);
         onPlayNext();
@@ -174,10 +186,10 @@ export const PlayerContent = ({
   const shuffleBtn = (
     <BsShuffle
       size={isMobile ? 14 : 16}
-      className={
-        (shuffleMode ? "text-cyan-500" : "text-neutral-200 hover:text-white") +
+      className={cn(
+        shuffleMode ? color : "text-neutral-400 hover:text-neutral-300",
         " cursor-pointer  transition "
-      }
+      )}
       onClick={() => setShuffleMode(!shuffleMode)}
     />
   );
@@ -187,13 +199,18 @@ export const PlayerContent = ({
       <BsRepeat1
         onClick={toggleRepeatMode}
         size={isMobile ? 14 : 16}
-        className="text-cyan-500 relative cursor-pointer transition"
+        className={cn(
+          "text-cyan-500 relative cursor-pointer transition",
+          color
+        )}
       />
     ) : (
       <BsRepeat
         onClick={toggleRepeatMode}
         size={isMobile ? 14 : 16}
-        className="text-neutral-200 cursor-pointer transition"
+        className={cn(
+          "text-neutral-400 hover:text-neutral-300 cursor-pointer transition"
+        )}
       />
     );
 
@@ -243,7 +260,6 @@ export const PlayerContent = ({
         <div className="gap-x-2 mt-[16px] flex md:hidden col-auto w-full justify-center items-center ">
           {shuffleBtn}
           <AiFillStepBackward
-            // onClick={onPlayPrev}
             onClick={onPlayPrevious}
             size={20}
             className="text-neutral-200 ml-2 hover:text-white transition cursor-pointer"
@@ -274,7 +290,7 @@ export const PlayerContent = ({
             onClick={handlePlay}
             className="flex items-center justify-center h-8 w-8 rounded-full p-1 bg-neutral-200 hover:bg-white cursor-pointer"
           >
-            <Icon size={16} className="text-black"></Icon>
+            <Icon size={16} className="text-neutral-900"></Icon>
           </div>
           <AiFillStepForward
             size={20}
@@ -292,24 +308,22 @@ export const PlayerContent = ({
         </div>
       </div>
       {/* VOLUME + PLAYLIST*/}
-      <div className="flex justify-end pr-2 ">
+      <div className="flex justify-end items-center pr-2 ">
         <PlaylistsMenu
-          classNameBtn="mx-4 text-neutral-200 outline-none hover:text-white transition"
+          classNameBtn="mx-4 text-neutral-300 h-[20px] outline-none hover:text-white transition"
           className={cn(isMobile ? " w-[180px] mr-[10px] " : "min-w-[180px]")}
           size={20}
           songId={song.id}
           playlists={playlists}
         ></PlaylistsMenu>
-        <div className="flex relative items-center gap-x-2">
+        <div className="flex relative items-center gap-x-2 text-neutral-300 hover:text-white h-[20px] ">
           <VolumeIcon
             onClick={toggleMute}
             onTouchStart={handleMouseDown}
             onMouseEnter={handleOpenSlider}
             onTouchEnd={handleMouseUp}
             className={
-              (cn(
-                "cursor-pointer group text-neutral-200 hover:text-white transition"
-              ),
+              (cn("group cursor-pointer transition"),
               isMobile && isOpenSlider ? "opacity-0" : "")
             }
             size={18}

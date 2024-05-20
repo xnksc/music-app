@@ -10,12 +10,14 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { usePlaylistModal } from "@/hooks/useAddPlaylistModal";
 import uniqid from "uniqid";
+import { useTranslations } from "next-intl";
 
 export const PlaylistModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const playlistModal = usePlaylistModal();
   const router = useRouter();
   const { user } = useUser();
+  const t = useTranslations("Modal");
   const supabaseClient = useSupabaseClient();
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
@@ -76,8 +78,8 @@ export const PlaylistModal = () => {
   return (
     <Modal
       className={isLoading ? "opacity-75 z-10" : "z-10"}
-      title="Playlist"
-      description="Add a playlist in your library"
+      title={t("playlist")}
+      description={t("addPlaylist")}
       isOpen={playlistModal.isOpen}
       onChange={onChange}
     >
@@ -86,14 +88,15 @@ export const PlaylistModal = () => {
           id="title"
           disabled={isLoading}
           {...register("title", { required: true })}
-          placeholder="Playlist title"
+          placeholder={t("name")}
         ></Input>
         <div>
-          <div className="pb-1">Select an image</div>
+          <div className="pb-1">{t("selectPlaylistImg")}</div>
           <Input
             id="image"
             type="file"
             disabled={isLoading}
+            className="border-none"
             accept="image/*"
             {...register("image", { required: true })}
           ></Input>
@@ -103,7 +106,7 @@ export const PlaylistModal = () => {
           disabled={isLoading}
           type="submit"
         >
-          Create Playlist
+          {t("create")}
         </Button>
       </form>
     </Modal>

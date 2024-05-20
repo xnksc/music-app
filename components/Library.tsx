@@ -1,24 +1,20 @@
-import React, { memo } from "react";
-import { TbPlaylist } from "react-icons/tb";
+import React from "react";
 import { FaPlus } from "react-icons/fa6";
 import { useAuthModal } from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { useUploadModal } from "@/hooks/useUploadModal";
-import { Playlist, Song } from "@/types";
-import { MediaItem } from "./MediaItem";
+import { Song } from "@/types";
 import useOnPlaySong from "@/hooks/useOnPlaySong";
 import { useSubscribeModal } from "@/hooks/useSubscribeModal";
 import { DeleteSong } from "./DeleteSong";
-import { SongsList } from "./SongsList";
-import { PlaylistsMenu } from "./PlaylistsMenu";
 import { LibraryMediaItem } from "./LibraryMediaItem";
 import { LuDisc3 } from "react-icons/lu";
 interface LibraryProps {
   songs: Song[];
-  playlists: Playlist[];
+  title: string;
 }
 
-export const Library = ({ songs, playlists }: LibraryProps) => {
+export const Library = ({ songs,title }: LibraryProps) => {
   const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
@@ -39,7 +35,9 @@ export const Library = ({ songs, playlists }: LibraryProps) => {
       <div className=" bg-gradient-to-b from-neutral-900 to-neutral-800 flex items-center justify-center sticky top-0  z-10 px-3 pt-2 pb-2">
         <div className="inline-flex items-center gap-x-2">
           <LuDisc3 className="text-neutral-400" size={16}></LuDisc3>
-          <p className="text-neutral-400 font-medium text-sm">Library</p>
+          <p className="text-neutral-400 font-medium text-sm">
+            {title}
+          </p>
         </div>
         <FaPlus
           className="text-neutral-400 

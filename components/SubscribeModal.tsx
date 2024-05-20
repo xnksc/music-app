@@ -11,6 +11,7 @@ import { Price, ProductWithPrice } from "@/types";
 
 import { Modal } from "./Modal";
 import { Button } from "./Button";
+import { useLocale } from "next-intl";
 
 interface SubscribeModalProps {
   products: ProductWithPrice[];
@@ -37,7 +38,7 @@ const SubscribeModal = ({ products }: SubscribeModalProps) => {
       subscribeModal.onClose();
     }
   };
-
+  const locale = useLocale();
   const handleCheckout = async (price: Price) => {
     setPriceIdLoading(price.id);
     if (!user) {
@@ -52,7 +53,7 @@ const SubscribeModal = ({ products }: SubscribeModalProps) => {
 
     try {
       const { sessionId } = await postData({
-        url: "/api/create-checkout-session",
+        url: '/en/api/create-checkout-session',
         data: { price },
       });
 
@@ -96,10 +97,11 @@ const SubscribeModal = ({ products }: SubscribeModalProps) => {
 
   return (
     <Modal
-      title="Only for premium users"
-      description="Listen to music with Spotify Premium"
+      title="Only in Premium Version"
+      description="Subscribe to unlock all features"
       isOpen={subscribeModal.isOpen}
       onChange={onChange}
+      className="z-10"
     >
       {content}
     </Modal>

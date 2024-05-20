@@ -10,12 +10,14 @@ import { useUser } from "@/hooks/useUser";
 import uniqid from "uniqid";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export const UploadModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const uploadModal = useUploadModal();
   const router = useRouter();
   const { user } = useUser();
+  const t = useTranslations("Modal");
   const supabaseClient = useSupabaseClient();
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
@@ -92,8 +94,8 @@ export const UploadModal = () => {
   return (
     <Modal
       className={isLoading ? "opacity-75 z-20" : "z-20"}
-      title="Song"
-      description="Upload song from your storage"
+      title={t("song")}
+      description={t("addSong")}
       isOpen={uploadModal.isOpen}
       onChange={onChange}
     >
@@ -102,31 +104,32 @@ export const UploadModal = () => {
           id="title"
           disabled={isLoading}
           {...register("title", { required: true })}
-          placeholder="Song title"
-          className="border-teal-500"
+          placeholder={t("name")}
         ></Input>
         <Input
           id="author"
           disabled={isLoading}
           {...register("author", { required: true })}
-          placeholder="Song author"
+          placeholder={t("author")}
         ></Input>
         <div>
-          <div className="pb-1">Select a file</div>
+          <div className="pb-1">{t("selectFile")}</div>
           <Input
             id="song"
             type="file"
             disabled={isLoading}
+            className="border-none"
             accept=".mp3"
             {...register("song", { required: true })}
           ></Input>
         </div>
         <div>
-          <div className="pb-1">Select an image</div>
+          <div className="pb-1">{t("selectSongImg")}</div>
           <Input
             id="image"
             type="file"
             disabled={isLoading}
+            className="border-none"
             accept="image/*"
             {...register("image", { required: true })}
           ></Input>
@@ -136,7 +139,7 @@ export const UploadModal = () => {
           disabled={isLoading}
           type="submit"
         >
-          Create
+          {t("create")}
         </Button>
       </form>
     </Modal>

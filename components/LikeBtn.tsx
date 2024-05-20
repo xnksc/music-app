@@ -3,6 +3,7 @@
 import { useAuthModal } from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { cn } from "@/libs/helpers";
+import { usePathname } from "@/navigation";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,8 +22,17 @@ export const LikeBtn = ({ songId, size = 20, classname }: LikeBtnProps) => {
   const { supabaseClient } = useSessionContext();
   const authModal = useAuthModal();
   const { user } = useUser();
-
+  const pathname = usePathname();
   const [isLiked, setIsLiked] = useState(false);
+
+  const color =
+    pathname == "/liked"
+      ? "text-sky-600 hover:text-sky-500"
+      : pathname.startsWith("/search")
+      ? "text-stone-400/90 hover:text-stone-300/90"
+      : pathname.startsWith("/playlists")
+      ? "text-teal-600 hover:text-teal-500"
+      : "text-cyan-600 hover:text-cyan-500";
 
   useEffect(() => {
     if (!user?.id) {
@@ -75,9 +85,7 @@ export const LikeBtn = ({ songId, size = 20, classname }: LikeBtnProps) => {
     <button
       onClick={handleLike}
       className={cn(
-        isLiked
-          ? "text-cyan-600 hover:text-cyan-500"
-          : "text-neutral-400 hover:text-neutral-100",
+        isLiked ? color : "text-neutral-400 hover:text-neutral-100",
         classname
       )}
     >

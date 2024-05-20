@@ -8,24 +8,23 @@ interface PlayerStore {
   reset: () => void;
   setVolume: (volume: number) => void;
   volume: number;
-  setIsMuted: (isMuted: boolean) => void;
-  isMuted: boolean;
+  // setIsMuted: (isMuted: boolean) => void;
+  // isMuted: boolean;
 }
 
 export const usePlayer = create<PlayerStore>((set) => ({
   ids: [],
   volume: 1,
   activeId: undefined,
-  isMuted: false,
-  setIsMuted: (isMuted: boolean) => {
-    set({ isMuted });
-    console.log(isMuted);
-  },
+  // isMuted: false,
+  // setIsMuted: (isMuted: boolean) => {
+  //   set({ isMuted });
+  //   console.log(isMuted);
+  // },
   setId: (id: string) => set({ activeId: id }),
   setIds: (ids: string[]) => set({ ids }),
   setVolume: (volume: number) => {
     set({ volume: volume });
-    console.log(volume);
   },
   reset: () => set({ ids: [], activeId: undefined }),
 }));

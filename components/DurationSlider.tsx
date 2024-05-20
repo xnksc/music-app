@@ -1,4 +1,6 @@
 "use client";
+import { cn } from "@/libs/helpers";
+import { usePathname } from "@/navigation";
 import * as RSlider from "@radix-ui/react-slider";
 import { useEffect, useState } from "react";
 interface SliderProps {
@@ -17,7 +19,15 @@ export const DurationSlider = ({
   const onChangeHandler = (newValue: number[]) => {
     onChange?.(newValue[0]);
   };
-
+  const pathname = usePathname();
+  const color =
+    pathname == "/liked"
+      ? "group-hover:bg-sky-500"
+      : pathname.startsWith("/search")
+      ? "group-hover:bg-stone-300/90"
+      : pathname.startsWith("/playlists")
+      ? "group-hover:bg-teal-500"
+      : "group-hover:bg-cyan-500";
   const [currTime, setCurrTime] = useState({
     min: 0,
     sec: 0,
@@ -59,17 +69,19 @@ export const DurationSlider = ({
         aria-label="Duration"
       >
         <RSlider.Track className=" bg-neutral-600 relative grow rounded-full h-[4px]">
-          <RSlider.Range className="absolute group-hover:bg-cyan-600  bg-neutral-200 rounded-full h-full"></RSlider.Range>
+          <RSlider.Range
+            className={cn("absolute bg-neutral-300 rounded-full h-full", color)}
+          ></RSlider.Range>
         </RSlider.Track>
         <RSlider.Thumb
-          // onChangeCapture={() => {
-          //   onMouseMove(0);
-          // }}
-          className="hidden group-hover:block w-2 h-2 bg-cyan-600 rounded-full outline-none cursor-pointer"
+          className={cn(
+            "hidden group-hover:block w-[10px] h-[10px] rounded-full outline-none cursor-pointer",
+            color
+          )}
           aria-label="Volume"
         />
       </RSlider.Root>
-      <div className="flex p-1 md:py-2 w-[auto] text-xs md:text-sm">
+      <div className="flex p-1 md:py-2 w-[auto]  text-xs md:text-sm">
         {durationMin > 9 ? (
           <span className="">{durationMin} </span>
         ) : (

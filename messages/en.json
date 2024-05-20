@@ -1,0 +1,50 @@
+{
+  "Home": {
+    "welcome": "Welcome!",
+    "title": "Newest",
+    "favorites": "Favourites",
+    "playlists": "Playlists"
+  },
+  "Playlist": {
+    "favorites": "Favourites",
+    "playlist": "Playlist",
+    "song": "Song",
+    "added": "Added"
+  },
+  "Search": {
+    "search": "Search",
+    "find": "Find songs"
+  },
+  "Modal": {
+    "title": "Welcome back!",
+    "desc": "Sign In",
+    "song": "New Song",
+    "addSong": "Upload a song from your storage",
+    "name": "Title",
+    "author": "Artist",
+    "create": "Create",
+    "selectFile": "Select a song file",
+    "selectSongImg": "Select a song image",
+    "selectPlaylistImg": "Select a playlist image",
+    "playlist": "New Playlist",
+    "addPlaylist": "Add a playlist in your library"
+  },
+  "Account": {
+    "account": "My Account",
+    "subscribe": "subscribe",
+    "manage": "Manage Subscribtion",
+    "sub": "You are already subscribed!",
+    "unsub": "No current subscriptions"
+  },
+  "Header": {
+    "logout": "Logout",
+    "login": "Log in"
+  },
+  "Sidebar": {
+    "home": "Home",
+    "search": "Search",
+    "liked": "Liked",
+    "playlists": "Playlists",
+    "library": "Library"
+  }
+}

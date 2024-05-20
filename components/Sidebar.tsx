@@ -13,6 +13,7 @@ import { twMerge } from "tailwind-merge";
 import { PlaylistsLibrary } from "./PlaylistsLibrary";
 import { FaHeart } from "react-icons/fa";
 import { MdLibraryMusic } from "react-icons/md";
+import { useLocale, useTranslations } from "next-intl";
 interface SidebarProps {
   children: React.ReactNode;
   songs: Song[];
@@ -22,29 +23,31 @@ interface SidebarProps {
 export const Sidebar = ({ children, songs, playlists }: SidebarProps) => {
   const pathname = usePathname();
   const player = usePlayer();
+  const locale = useLocale();
+  const t = useTranslations("Sidebar");
   const routes = useMemo(
     () => [
       {
-        active: pathname == "/",
-        label: "Home",
+        active: pathname == `/${locale}`,
+        label: t("home"),
         href: "/",
         icon: HiHome,
       },
       {
-        active: pathname === "/search",
-        label: "Search",
+        active: pathname.includes("/search"),
+        label: t("search"),
         href: "/search",
         icon: BiSearch,
       },
       {
-        active: pathname === "/liked",
-        label: "Liked",
+        active: pathname == `/${locale}/liked`,
+        label: t("liked"),
         href: "/liked",
         icon: FaHeart,
       },
       {
-        active: pathname.startsWith("/playlists"),
-        label: "Playlists",
+        active: pathname.includes("/playlists"),
+        label: t("playlists"),
         href: "/playlists",
         icon: MdLibraryMusic,
       },
@@ -67,10 +70,13 @@ export const Sidebar = ({ children, songs, playlists }: SidebarProps) => {
           </div>
         </Box>
         <Box className="overflow-y-auto scrollbar-none h-full rounded-r-md">
-          <Library songs={songs} playlists={playlists}></Library>
+          <Library songs={songs} title={t("library")}></Library>
         </Box>
         <Box className="overflow-y-auto scrollbar-none h-full rounded-tr-md">
-          <PlaylistsLibrary playlists={playlists}></PlaylistsLibrary>
+          <PlaylistsLibrary
+            playlists={playlists}
+            title={t("playlists")}
+          ></PlaylistsLibrary>
         </Box>
       </div>
       <main className="h-full flex-1 overflow-y-auto">{children}</main>

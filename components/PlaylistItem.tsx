@@ -1,9 +1,8 @@
-import React, { useMemo } from "react";
-import { MediaItem } from "./MediaItem";
+import React from "react";
 import { DeletePlaylistButton } from "./DeletePlaylistButton";
 import { Playlist } from "@/types";
-import { useRouter } from "next/navigation";
 import { LibraryMediaItem } from "./LibraryMediaItem";
+import { useRouter } from "@/navigation";
 interface PlaylistItemProps {
   playlist: Playlist;
 }
@@ -12,22 +11,6 @@ export const PlaylistItem = ({ playlist }: PlaylistItemProps) => {
   const handleClick = (id: string) => {
     router.push(`/playlists/${id}`);
   };
-  // const playlistComponent = useMemo(() => {
-
-  //   return (
-  //     <LibraryMediaItem
-  //       className="group-hover:bg-gradient-to-r  group-hover:transition group-hover:from-neutral-900/80 group-hover:to-neutral-800"
-  //       key={playlist.id}
-  //       onClick={() => handleClick(playlist.id)}
-  //       data={playlist}
-  //     ></LibraryMediaItem>
-  //   );
-  // }, [playlist, router]);
-  // const deletePlaylistComponent = useMemo(() => {
-  //   return (
-
-  //   );
-  // }, [playlist.id, playlist.image_path]);
   return (
     <div className="flex items-center justify-between group" key={playlist.id}>
       <div className="w-full  group-hover:w-[calc(100%-25px)]">

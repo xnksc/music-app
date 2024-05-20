@@ -8,9 +8,11 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useAuthModal } from "@/hooks/useAuthModal";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export const AuthModal = () => {
   const supabaseClient = useSupabaseClient();
+  const t = useTranslations("Modal");
   const router = useRouter();
   const { onClose, isOpen } = useAuthModal();
   const { session } = useSessionContext();
@@ -28,8 +30,8 @@ export const AuthModal = () => {
   return (
     <Modal
       className="z-20"
-      title="Welcome back"
-      description="Sign in"
+      title={t("title")}
+      description={t("desc")}
       isOpen={isOpen}
       onChange={onChange}
     >
@@ -43,7 +45,6 @@ export const AuthModal = () => {
           variables: {
             default: {
               colors: {
-                // COLOR ON MODAL BTN
                 brand: "#404040",
                 brandAccent: "#0891b2",
               },
